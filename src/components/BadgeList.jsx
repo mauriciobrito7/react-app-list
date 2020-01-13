@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 export class BadgeList extends Component {
     render() {
@@ -10,7 +11,9 @@ export class BadgeList extends Component {
                             <li key={badge.id}> {/*cada elemento en la lista tiene que tener un elemento unico llamado key 
                                       Es un prop que ayuda a react y lo ayuda para poder determinar cuando el elmento se vuelve a renderizar
                             */}
-                                <p>{badge.firstName} - {badge.lastName}</p>
+                                <Link to={`/badges/${badge.id}/edit`}>
+                                    <p>{badge.firstName} - {badge.lastName}</p>
+                                </Link>
                             </li>
                                   )
                     })}

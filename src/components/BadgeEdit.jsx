@@ -6,7 +6,7 @@ import BadgeForm from '../components/BadgeForm'
 import api from '../api'
 import PageLoading from '../components/PageLoading'
 
-export class BadgeNew extends Component {
+export class BadgeEdit extends Component {
    //Tenemos que inicializar el estado para que pueda leer desde el input e inicializamos los valores para que no de warning
     state = { 
         form: {
@@ -16,8 +16,28 @@ export class BadgeNew extends Component {
         jobTitle: '',
         instagram: ''
         },
-        loading: false,
+        loading: true, // como vamos a iniciar con una petición se hace cierto
         error: null
+    }
+
+    componentDidMount() {
+        this.fecthData()
+    }
+
+    fecthData = async e => { 
+        this.setState({
+            loading: true, error: null
+        })
+
+        try {
+            const data = await api.badges.read(
+                // cada una de esas variables que declaramos en la ruta, lo podemos acceder dentro del objeto params
+                this.props.match.params.badgeId
+            )
+            this.setState({loading: false, form: data})    
+        } catch (error) {
+            this.setState({loading: false, error: error})
+        }
     }
 
     handleChange = e => {
@@ -38,8 +58,8 @@ export class BadgeNew extends Component {
         })
 
         try {
-            
-           await api.badges.create(this.state.form)
+            // actualizar   
+           await api.badges.update(this.props.match.params.badgeId,this.state.form)
             this.setState({loading:false})
 
             // Redirigir al usuario a badges
@@ -67,7 +87,7 @@ export class BadgeNew extends Component {
                 email={this.state.form.email || 'EMAIL'}
                 jobTitle={this.state.form.jobTitle || 'JOB TITLE'}
                 instagram={this.state.form.instagram || 'INSTAGRAM'}/> 
-                <h1>New Attendant</h1>
+                <h1>Edit</h1>
                 <BadgeForm error={this.state.error} onSubmit={this.handleSubmit} onChange={this.handleChange } formValues={this.state.form}/>
             </React.Fragment>
             
@@ -75,4 +95,4 @@ export class BadgeNew extends Component {
     }
 }
 
-export default BadgeNew
+export default BadgeEdit
