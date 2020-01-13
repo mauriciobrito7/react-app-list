@@ -6,6 +6,7 @@ import api from '../api'
 import BadgeList from '../components/BadgeList'
 import PageLoading from '../components/PageLoading'
 import PageError from '../components/PageError'
+import MiniLoader from '../components/MiniLoader'
 
 
 export class Badges extends Component {
@@ -18,9 +19,21 @@ export class Badges extends Component {
 
     componentDidMount() {
         this.fetchData()
+
+        this.intervalId = setInterval(this.fetchData,5000)
     }
+    // Polling 
+    /*Consiste de cada cierto tiempo busquemos estos datos y estamos constantemente haciendo esto hasta que el usuario se va de la
+    pagina y se desmonta el componente
+    */
+   
+    componentWillUnmount() {
+        // Tenemos que liberar de la memoria el intervalo
+        clearInterval(this.intervalId)
+    }
+
     // Sincronizandos datos
-    async fetchData () {
+    fetchData = async () => {
         // cambiamos a true el loading para cada vez que este en false
         this.setState({
             loading: true,
@@ -48,7 +61,7 @@ export class Badges extends Component {
     render() {
 
         // Si todavía la app esta cargando
-        if (this.state.loading) {
+        if (this.state.loading && this.state.data === undefined) {
             return (<PageLoading/>)
         }
 
@@ -75,6 +88,9 @@ export class Badges extends Component {
                 <div className="Badges__list">
                     <div className="Badges__container">
                           <BadgeList badges={this.state.data}/>
+                          {this.state.loading && (
+                              <MiniLoader/>
+                          )}
                     </div> 
                 </div>
 
