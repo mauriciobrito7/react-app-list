@@ -11,7 +11,7 @@ export class BadgeList extends Component {
                             <li key={badge.id}> {/*cada elemento en la lista tiene que tener un elemento unico llamado key 
                                       Es un prop que ayuda a react y lo ayuda para poder determinar cuando el elmento se vuelve a renderizar
                             */}
-                                <Link to={`/badges/${badge.id}/edit`}>
+                                <Link to={`/badges/${badge.id}`}>
                                     <p>{badge.firstName} - {badge.lastName}</p>
                                 </Link>
                             </li>

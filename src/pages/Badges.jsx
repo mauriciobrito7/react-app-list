@@ -20,13 +20,13 @@ export class Badges extends Component {
     componentDidMount() {
         this.fetchData()
 
+        // Polling 
+        /*Consiste de cada cierto tiempo busquemos estos datos y estamos constantemente haciendo esto hasta que el usuario se va de la
+        pagina y se desmonta el componente
+        */
         this.intervalId = setInterval(this.fetchData,5000)
     }
-    // Polling 
-    /*Consiste de cada cierto tiempo busquemos estos datos y estamos constantemente haciendo esto hasta que el usuario se va de la
-    pagina y se desmonta el componente
-    */
-   
+    
     componentWillUnmount() {
         // Tenemos que liberar de la memoria el intervalo
         clearInterval(this.intervalId)

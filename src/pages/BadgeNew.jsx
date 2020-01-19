@@ -61,13 +61,13 @@ export class BadgeNew extends Component {
         }
         return (
             <React.Fragment>
+                <h1>New Attendant</h1>
                 <Badge 
                 firstName={this.state.form.firstName || 'FIRST NAME' } 
                 lastName={this.state.form.lastName || 'LAST NAME' }
                 email={this.state.form.email || 'EMAIL'}
                 jobTitle={this.state.form.jobTitle || 'JOB TITLE'}
                 instagram={this.state.form.instagram || 'INSTAGRAM'}/> 
-                <h1>New Attendant</h1>
                 <BadgeForm error={this.state.error} onSubmit={this.handleSubmit} onChange={this.handleChange } formValues={this.state.form}/>
             </React.Fragment>
             
